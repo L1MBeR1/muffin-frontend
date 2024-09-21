@@ -18,25 +18,23 @@ const options: CreateAxiosDefaults = {
 const axiosClassic = axios.create(options)
 const axiosWithAuth = axios.create(options)
 
-// axiosClassic.interceptors.request.use(config => {
-// 	console.log('Classic Request:', config)
-// 	return config
-// })
+axiosClassic.interceptors.request.use(config => {
+	console.log('Classic Request:', config)
+	return config
+})
 
-// axiosClassic.interceptors.response.use(
-// 	response => {
-//
-// 		console.log('Classic Response:', response)
-// 		return response
-// 	},
-// 	error => {
-// 		// Логируем ошибку
-// 		console.log('Classic Error Response:', error)
-// 		throw error
-// 	}
-// )
+axiosClassic.interceptors.response.use(
+	response => {
+		console.log('Classic Response:', response)
+		return response
+	},
+	error => {
+		// Логируем ошибку
+		console.log('Classic Error Response:', error)
+		throw error
+	}
+)
 
-// Логирование для axiosWithAuth
 axiosWithAuth.interceptors.request.use(config => {
 	const accessToken = getAccessToken()
 
@@ -44,20 +42,20 @@ axiosWithAuth.interceptors.request.use(config => {
 		config.headers.Authorization = `Bearer ${accessToken}`
 	}
 
-	// console.log('Auth Request:', config)
+	console.log('Auth Request:', config)
 
 	return config
 })
 
 axiosWithAuth.interceptors.response.use(
 	response => {
-		// console.log('Auth Response:', response)
+		console.log('Auth Response:', response)
 		return response
 	},
 	async error => {
 		const originalRequest = error.config
 
-		// console.log('Auth Error Response:', error)
+		console.log('Auth Error Response:', error)
 
 		if (
 			(error?.response?.status === 401 ||
@@ -68,12 +66,12 @@ axiosWithAuth.interceptors.response.use(
 		) {
 			originalRequest._isRetry = true
 			try {
-				// console.log('Attempting to refresh tokens...')
+				console.log('Attempting to refresh tokens...')
 				await authService.getNewTokens()
-				// console.log('Tokens refreshed, retrying original request...')
+				console.log('Tokens refreshed, retrying original request...')
 				return axiosWithAuth.request(originalRequest)
 			} catch (error) {
-				// console.log('Token refresh failed:', error)
+				console.log('Token refresh failed:', error)
 				if (errorCatch(error) === 'jwt expired') removeFromStorage()
 			}
 		}
