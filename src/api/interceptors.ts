@@ -29,7 +29,6 @@ axiosClassic.interceptors.response.use(
 		return response
 	},
 	error => {
-		// Логируем ошибку
 		console.log('Classic Error Response:', error)
 		throw error
 	}
