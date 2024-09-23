@@ -21,13 +21,17 @@ import { PasswordInput } from '../fields/passwordField'
 
 import { authService } from '@/services/auth.service'
 
-interface ILoginModalProps {
+interface IRegisterModalProps {
 	isOpen: boolean
 	onOpenChange: (open: boolean) => void
-	toggleModal: () => void // функция для переключения на регистрацию
+	toggleModal: () => void // функция для переключения на авторизацию
 }
 
-function LoginModal({ isOpen, onOpenChange, toggleModal }: ILoginModalProps) {
+function RegisterModal({
+	isOpen,
+	onOpenChange,
+	toggleModal
+}: IRegisterModalProps) {
 	const {
 		register,
 		handleSubmit,
@@ -42,19 +46,19 @@ function LoginModal({ isOpen, onOpenChange, toggleModal }: ILoginModalProps) {
 
 	const { mutate } = useMutation({
 		mutationKey: ['auth'],
-		mutationFn: (data: IAuthForm) => authService.login(data),
+		mutationFn: (data: IAuthForm) => authService.register(data),
 		onMutate() {
 			setLoading(true)
 			setAuthError(null)
 		},
 		onSuccess() {
-			toast.success('Успешный вход в аккаунт!')
+			toast.success('Успешная регистрация!')
 			reset()
 			push(APP_PAGES.HOME)
 			onOpenChange(false)
 		},
 		onError(error: any) {
-			setAuthError('Ошибка при входе. Проверьте данные.')
+			setAuthError('Ошибка при регистрации. Проверьте данные.')
 		},
 		onSettled() {
 			setLoading(false)
@@ -75,7 +79,7 @@ function LoginModal({ isOpen, onOpenChange, toggleModal }: ILoginModalProps) {
 				{onClose => (
 					<>
 						<ModalHeader className='flex flex-col gap-1'>
-							Вход в аккаунт
+							Регистрация
 						</ModalHeader>
 						<ModalBody>
 							<form
@@ -116,7 +120,7 @@ function LoginModal({ isOpen, onOpenChange, toggleModal }: ILoginModalProps) {
 									color='primary'
 									isLoading={loading}
 								>
-									Войти
+									Зарегистрироваться
 								</Button>
 							</form>
 						</ModalBody>
@@ -126,7 +130,7 @@ function LoginModal({ isOpen, onOpenChange, toggleModal }: ILoginModalProps) {
 								variant='light'
 								onPress={toggleModal}
 							>
-								Зарегистрироваться
+								Уже есть аккаунт? Войти
 							</Button>
 						</ModalFooter>
 					</>
@@ -136,4 +140,4 @@ function LoginModal({ isOpen, onOpenChange, toggleModal }: ILoginModalProps) {
 	)
 }
 
-export default LoginModal
+export default RegisterModal

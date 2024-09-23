@@ -2,13 +2,14 @@ import { Button } from '@nextui-org/react'
 import { User } from 'lucide-react'
 import { useState } from 'react'
 
-import LoginModal from '../modals/loginModal'
+import AuthModal from '../modals/authModal'
 
 export function ProfileButton() {
 	const [openModal, setOpenModal] = useState(false)
+
 	return (
 		<>
-			<LoginModal
+			<AuthModal
 				isOpen={openModal}
 				onOpenChange={setOpenModal}
 			/>
