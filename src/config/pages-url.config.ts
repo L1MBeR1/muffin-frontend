@@ -1,5 +1,5 @@
 class PAGES {
-	HOME = ''
+	HOME = '/'
 }
 
 export const APP_PAGES = new PAGES()

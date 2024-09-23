@@ -3,10 +3,10 @@ import localFont from 'next/font/local'
 
 import { SITE_NAME } from '@/constants/seo.constants'
 
+import '../globals.css'
 import { Providers } from '../providers'
 
 import Base from './base'
-import './globals.css'
 
 const geistSans = localFont({
 	src: '../../fonts/GeistVF.woff',

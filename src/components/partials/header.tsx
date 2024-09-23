@@ -11,33 +11,25 @@ import {
 	NavbarMenuItem,
 	NavbarMenuToggle
 } from '@nextui-org/react'
+import { ShoppingBasket } from 'lucide-react'
 import { useState } from 'react'
+
+import { ProfileButton } from './profileButton'
 
 export function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-	const menuItems: string[] = [
-		'Profile',
-		'Dashboard',
-		'Activity',
-		'Analytics',
-		'System',
-		'Deployments',
-		'My Settings',
-		'Team Settings',
-		'Help & Feedback',
-		'Log Out'
-	]
-
 	return (
-		<Navbar onMenuOpenChange={setIsMenuOpen}>
+		<Navbar
+			onMenuOpenChange={setIsMenuOpen}
+			maxWidth='full'
+		>
 			<NavbarContent>
 				<NavbarMenuToggle
 					aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
 					className='sm:hidden'
 				/>
 				<NavbarBrand>
-					{/* <AcmeLogo /> */}
 					<p className='font-bold text-inherit'>ACME</p>
 				</NavbarBrand>
 			</NavbarContent>
@@ -72,39 +64,30 @@ export function Header() {
 				</NavbarItem>
 			</NavbarContent>
 			<NavbarContent justify='end'>
-				<NavbarItem className='hidden lg:flex'>
-					<Link href='#'>Login</Link>
-				</NavbarItem>
 				<NavbarItem>
+					<ProfileButton />
+				</NavbarItem>
+				<NavbarItem className='hidden lg:flex'>
 					<Button
-						as={Link}
+						isIconOnly
 						color='primary'
-						href='#'
-						variant='flat'
+						variant='light'
 					>
-						Sign Up
+						<ShoppingBasket />
 					</Button>
 				</NavbarItem>
 			</NavbarContent>
-			<NavbarMenu>
-				{menuItems.map((item, index) => (
-					<NavbarMenuItem key={`${item}-${index}`}>
-						<Link
-							color={
-								index === 2
-									? 'primary'
-									: index === menuItems.length - 1
-										? 'danger'
-										: 'foreground'
-							}
-							className='w-full'
-							href='#'
-							size='lg'
-						>
-							{item}
-						</Link>
-					</NavbarMenuItem>
-				))}
+
+			<NavbarMenu className='sm:hidden'>
+				<NavbarMenuItem>
+					<Link
+						className='w-full'
+						href='#'
+						size='lg'
+					>
+						Пример
+					</Link>
+				</NavbarMenuItem>
 			</NavbarMenu>
 		</Navbar>
 	)

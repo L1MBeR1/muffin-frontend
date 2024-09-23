@@ -1,5 +1,7 @@
-import { Footer } from '@/components/footer'
-import { Header } from '@/components/header'
+import { Toaster } from 'sonner'
+
+import { Footer } from '@/components/partials/footer'
+import { Header } from '@/components/partials/header'
 
 export default function Base({
 	children
@@ -9,6 +11,7 @@ export default function Base({
 	return (
 		<div>
 			<Header />
+			<Toaster />
 			<main>{children}</main>
 			<Footer />
 		</div>
