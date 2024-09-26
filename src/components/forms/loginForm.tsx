@@ -1,5 +1,5 @@
 import { Button, Input } from '@nextui-org/react'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -19,6 +19,7 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({ onToggle, onOpenChange }: LoginFormProps) => {
+	const queryClient = useQueryClient()
 	const { register, handleSubmit, reset } = useForm<IAuthForm>()
 	const [loading, setLoading] = useState(false)
 	const [authError, setAuthError] = useState<string | null>(null)
@@ -36,6 +37,7 @@ const LoginForm = ({ onToggle, onOpenChange }: LoginFormProps) => {
 			reset()
 			push(APP_PAGES.HOME)
 			onOpenChange(false)
+			queryClient.refetchQueries({ queryKey: ['profile'], type: 'active' })
 		},
 		onError(error: any) {
 			setAuthError('Ошибка при входе. Проверьте данные.')
@@ -56,12 +58,16 @@ const LoginForm = ({ onToggle, onOpenChange }: LoginFormProps) => {
 			<Input
 				label='Почта'
 				placeholder='Введите почту'
+				size={'lg'}
+				variant={'bordered'}
 				{...register('email', { required: true })}
 			/>
 			<PasswordInput
 				label='Пароль'
 				placeholder='Введите ваш пароль'
 				register={register}
+				size={'lg'}
+				variant={'bordered'}
 				rules={{
 					required: 'Пароль обязателен',
 					minLength: {
@@ -75,6 +81,8 @@ const LoginForm = ({ onToggle, onOpenChange }: LoginFormProps) => {
 				className='full'
 				color='primary'
 				type='submit'
+				size='lg'
+				isLoading={loading}
 			>
 				Войти
 			</Button>

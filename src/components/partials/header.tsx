@@ -12,71 +12,67 @@ import {
 	NavbarMenuToggle
 } from '@nextui-org/react'
 import { ShoppingBasket } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+
+import { APP_PAGES } from '@/config/pages-url.config'
 
 import { ProfileButton } from './profileButton'
 
 export function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const { push } = useRouter()
 
 	return (
 		<Navbar
 			onMenuOpenChange={setIsMenuOpen}
 			maxWidth='full'
+			isBlurred={false}
 		>
-			<NavbarContent>
-				<NavbarMenuToggle
-					aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-					className='sm:hidden'
-				/>
-				<NavbarBrand>
-					<p className='font-bold text-inherit'>ACME</p>
-				</NavbarBrand>
-			</NavbarContent>
+			<div className='grid grid-cols-3 items-center w-full'>
+				<NavbarContent className='md:hidden'>
+					<NavbarMenuToggle
+						aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+					/>
+				</NavbarContent>
+				<NavbarContent className='hidden md:flex gap-6 justify-start'>
+					<NavbarItem>
+						<Link>Продукция</Link>
+					</NavbarItem>
+					<NavbarItem>
+						<Link>О нас</Link>
+					</NavbarItem>
+					<NavbarItem>
+						<Link>Адреса и контакты</Link>
+					</NavbarItem>
+				</NavbarContent>
 
-			<NavbarContent
-				className='hidden sm:flex gap-4'
-				justify='center'
-			>
-				<NavbarItem>
-					<Link
-						color='foreground'
-						href='#'
+				{/* Центр — бренд компании */}
+				<NavbarContent className='justify-self-center'>
+					<NavbarBrand
+						onClick={() => {
+							push(APP_PAGES.HOME)
+						}}
 					>
-						Features
-					</Link>
-				</NavbarItem>
-				<NavbarItem isActive>
-					<Link
-						href='#'
-						aria-current='page'
-					>
-						Customers
-					</Link>
-				</NavbarItem>
-				<NavbarItem>
-					<Link
-						color='foreground'
-						href='#'
-					>
-						Integrations
-					</Link>
-				</NavbarItem>
-			</NavbarContent>
-			<NavbarContent justify='end'>
-				<NavbarItem>
-					<ProfileButton />
-				</NavbarItem>
-				<NavbarItem className='hidden lg:flex'>
-					<Button
-						isIconOnly
-						color='primary'
-						variant='light'
-					>
-						<ShoppingBasket />
-					</Button>
-				</NavbarItem>
-			</NavbarContent>
+						<p className='font-bold text-inherit text-center'>ACME</p>
+					</NavbarBrand>
+				</NavbarContent>
+
+				<NavbarContent justify='end'>
+					<NavbarItem>
+						<ProfileButton />
+					</NavbarItem>
+					<NavbarItem>
+						<Button
+							isIconOnly
+							color='primary'
+							variant='light'
+						>
+							<ShoppingBasket />
+						</Button>
+					</NavbarItem>
+				</NavbarContent>
+			</div>
 
 			<NavbarMenu className='sm:hidden'>
 				<NavbarMenuItem>

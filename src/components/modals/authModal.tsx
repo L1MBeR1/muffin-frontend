@@ -1,3 +1,5 @@
+'use client'
+
 import {
 	Button,
 	Modal,
@@ -42,7 +44,10 @@ const AuthModalContainer = ({
 							onOpenChange={onOpenChange}
 						/>
 					) : (
-						<RegisterForm onToggle={toggleForm} />
+						<RegisterForm
+							onToggle={toggleForm}
+							onOpenChange={onOpenChange}
+						/>
 					)}
 				</ModalBody>
 				<ModalFooter className='justify-center'>
@@ -50,6 +55,7 @@ const AuthModalContainer = ({
 						color='primary'
 						variant='light'
 						onClick={toggleForm}
+						size='lg'
 					>
 						{isLoginForm ? 'Зарегистрироваться' : 'Войти в аккаунт'}
 					</Button>

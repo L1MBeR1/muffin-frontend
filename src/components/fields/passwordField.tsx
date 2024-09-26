@@ -3,9 +3,14 @@ import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { RegisterOptions, UseFormRegister } from 'react-hook-form'
 
+type Variant = 'flat' | 'faded' | 'bordered' | 'underlined'
+type Size = 'sm' | 'md' | 'lg'
+
 interface IPasswordInputProps {
 	label: string
 	placeholder: string
+	size: Size
+	variant: Variant
 	register: UseFormRegister<any>
 	rules?: RegisterOptions
 }
@@ -13,6 +18,8 @@ interface IPasswordInputProps {
 export function PasswordInput({
 	label,
 	placeholder,
+	size,
+	variant,
 	register,
 	rules
 }: IPasswordInputProps) {
@@ -27,7 +34,8 @@ export function PasswordInput({
 			label={label}
 			placeholder={placeholder}
 			type={isPasswordVisible ? 'text' : 'password'}
-			variant='bordered'
+			variant={variant}
+			size={size}
 			endContent={
 				<Button
 					isIconOnly

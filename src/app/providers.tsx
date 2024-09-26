@@ -3,6 +3,7 @@
 import { NextUIProvider } from '@nextui-org/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { useRouter } from 'next/navigation'
 import { PropsWithChildren, useState } from 'react'
 
 export function Providers({ children }: PropsWithChildren) {
@@ -15,10 +16,14 @@ export function Providers({ children }: PropsWithChildren) {
 			}
 		})
 	)
+	const router = useRouter()
 
 	return (
 		<QueryClientProvider client={client}>
-			<NextUIProvider>
+			<NextUIProvider
+				locale='ru-RU'
+				navigate={router.push}
+			>
 				{children}
 				<ReactQueryDevtools initialIsOpen={false} />
 			</NextUIProvider>
