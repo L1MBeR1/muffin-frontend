@@ -17,16 +17,20 @@ export interface IUser {
 	id: number
 	firstName?: string | null
 	lastName?: string | null
-	patronymic?: string | null
+	birthDate?: string | null
 	email: string
-	phone?: string | null
 	gender?: EnumGender | null
 	isBlocked: boolean
 	createdAt: string
 	updatedAt: string
 	roles: EnumRoles[]
 }
-
+export interface IProfile {
+	firstName?: string | null
+	lastName?: string | null
+	birthDate?: string | null
+	gender?: EnumGender | null
+}
 export interface IAuthResponse {
 	accessToken: string
 	user: IUser

@@ -15,7 +15,7 @@ interface IPasswordInputProps {
 	rules?: RegisterOptions
 }
 
-export function PasswordInput({
+export function PasswordField({
 	label,
 	placeholder,
 	size,

@@ -12,8 +12,9 @@ export const metadata: Metadata = {
 export default function Personal() {
 	return (
 		<div className='flex flex-col'>
-			<div>Профиль</div>
+			<h2>Личные данные</h2>
 			<ProfileData />
+			<h2>Данные аккаунта</h2>
 		</div>
 	)
 }

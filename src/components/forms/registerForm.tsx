@@ -9,7 +9,7 @@ import { IAuthForm } from '@/types/auth.types'
 
 import { APP_PAGES } from '@/config/pages-url.config'
 
-import { PasswordInput } from '../fields/passwordField'
+import { PasswordField } from '../fields/passwordField'
 
 import { authService } from '@/services/auth.service'
 
@@ -63,7 +63,7 @@ const RegisterForm = ({ onToggle, onOpenChange }: RegisterFormProps) => {
 				variant={'bordered'}
 				{...register('email', { required: true })}
 			/>
-			<PasswordInput
+			<PasswordField
 				label='Пароль'
 				placeholder='Введите ваш пароль'
 				register={register}
