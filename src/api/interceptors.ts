@@ -1,6 +1,5 @@
 import axios, { type CreateAxiosDefaults } from 'axios'
 
-import { errorCatch } from './error'
 import {
 	getAccessToken,
 	removeFromStorage
@@ -34,15 +33,27 @@ axiosClassic.interceptors.response.use(
 	}
 )
 
-axiosWithAuth.interceptors.request.use(config => {
+axiosWithAuth.interceptors.request.use(async config => {
 	const accessToken = getAccessToken()
 
-	if (config?.headers && accessToken) {
+	if (!accessToken) {
+		console.log('No access token available, attempting to refresh tokens...')
+		try {
+			await authService.getNewTokens()
+			const newAccessToken = getAccessToken()
+			if (newAccessToken) {
+				config.headers.Authorization = `Bearer ${newAccessToken}`
+			}
+		} catch (error) {
+			console.log('Token refresh failed:', error)
+			removeFromStorage()
+			throw new Error('Token refresh failed')
+		}
+	} else {
 		config.headers.Authorization = `Bearer ${accessToken}`
 	}
 
 	console.log('Auth Request:', config)
-
 	return config
 })
 
@@ -51,29 +62,18 @@ axiosWithAuth.interceptors.response.use(
 		console.log('Auth Response:', response)
 		return response
 	},
-	async error => {
+	error => {
 		const originalRequest = error.config
 
 		console.log('Auth Error Response:', error)
 
-		if (
-			(error?.response?.status === 401 ||
-				errorCatch(error) === 'jwt expired' ||
-				errorCatch(error) === 'jwt must be provided') &&
-			error.config &&
-			!error.config._isRetry
-		) {
+		if (error?.response?.status === 401 && !originalRequest._isRetry) {
 			originalRequest._isRetry = true
-			try {
-				console.log('Attempting to refresh tokens...')
-				await authService.getNewTokens()
-				console.log('Tokens refreshed, retrying original request...')
-				return axiosWithAuth.request(originalRequest)
-			} catch (error) {
-				console.log('Token refresh failed:', error)
-				if (errorCatch(error) === 'jwt expired') removeFromStorage()
-			}
+			console.log(
+				'Access token is still invalid, handling error appropriately.'
+			)
 		}
+
 		throw error
 	}
 )
