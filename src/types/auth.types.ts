@@ -7,15 +7,30 @@ export enum EnumGender {
 	female = 'female'
 }
 
-export interface IUser {
-	id: number
-	firstName: string
-	lastName: string
-	patronymic: string
-	phone: string
-	gender: EnumGender
+export enum EnumRoles {
+	admin = 'admin',
+	user = 'user',
+	collector = 'collector'
 }
 
+export interface IUser {
+	id: number
+	firstName?: string | null
+	lastName?: string | null
+	birthDate?: string | null
+	email: string
+	gender?: EnumGender | null
+	isBlocked: boolean
+	createdAt: string
+	updatedAt: string
+	roles: EnumRoles[]
+}
+export interface IProfile {
+	firstName?: string | null
+	lastName?: string | null
+	birthDate?: string | null
+	gender?: EnumGender | null
+}
 export interface IAuthResponse {
 	accessToken: string
 	user: IUser

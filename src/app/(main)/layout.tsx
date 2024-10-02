@@ -3,16 +3,18 @@ import localFont from 'next/font/local'
 
 import { SITE_NAME } from '@/constants/seo.constants'
 
-import './globals.css'
-import { Providers } from './providers'
+import '../globals.css'
+import { Providers } from '../providers'
+
+import Base from './base'
 
 const geistSans = localFont({
-	src: './fonts/GeistVF.woff',
+	src: '../../fonts/GeistVF.woff',
 	variable: '--font-geist-sans',
 	weight: '100 900'
 })
 const geistMono = localFont({
-	src: './fonts/GeistMonoVF.woff',
+	src: '../../fonts/GeistVF.woff',
 	variable: '--font-geist-mono',
 	weight: '100 900'
 })
@@ -31,11 +33,13 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang='en'>
+		<html lang='ru'>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<Providers>{children}</Providers>
+				<Providers>
+					<Base>{children}</Base>
+				</Providers>
 			</body>
 		</html>
 	)
