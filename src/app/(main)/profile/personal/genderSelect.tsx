@@ -1,4 +1,3 @@
-// Убедитесь, что путь к типам правильный
 import {
 	RadioGroup,
 	RadioProps,
@@ -60,8 +59,9 @@ export default function GenderSelector({
 	return (
 		<RadioGroup
 			label='Пол'
-			orientation={'horizontal'}
+			orientation='horizontal'
 			onChange={handleChange}
+			value={selectedGender || undefined}
 		>
 			<CustomRadio
 				value={EnumGender.male}

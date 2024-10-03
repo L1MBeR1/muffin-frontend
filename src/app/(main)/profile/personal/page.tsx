@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
-import ProfileData from './personalData'
+import AccountData from './accountData'
+import ProfileData from './profileData'
 
 export const metadata: Metadata = {
 	title: 'Профиль',
@@ -15,6 +16,7 @@ export default function Personal() {
 			<h2>Личные данные</h2>
 			<ProfileData />
 			<h2>Данные аккаунта</h2>
+			<AccountData />
 		</div>
 	)
 }

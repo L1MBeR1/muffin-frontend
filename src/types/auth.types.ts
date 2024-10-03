@@ -25,12 +25,6 @@ export interface IUser {
 	updatedAt: string
 	roles: EnumRoles[]
 }
-export interface IProfile {
-	firstName?: string | null
-	lastName?: string | null
-	birthDate?: string | null
-	gender?: EnumGender | null
-}
 export interface IAuthResponse {
 	accessToken: string
 	user: IUser

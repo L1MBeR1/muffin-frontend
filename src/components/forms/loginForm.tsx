@@ -66,6 +66,7 @@ const LoginForm = ({ onToggle, onOpenChange }: LoginFormProps) => {
 				label='Пароль'
 				placeholder='Введите ваш пароль'
 				register={register}
+				registerName='password'
 				size={'lg'}
 				variant={'bordered'}
 				rules={{

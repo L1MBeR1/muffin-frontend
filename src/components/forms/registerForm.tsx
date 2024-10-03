@@ -67,6 +67,7 @@ const RegisterForm = ({ onToggle, onOpenChange }: RegisterFormProps) => {
 				label='Пароль'
 				placeholder='Введите ваш пароль'
 				register={register}
+				registerName='password'
 				size={'lg'}
 				variant={'bordered'}
 				rules={{

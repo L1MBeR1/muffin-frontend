@@ -12,6 +12,7 @@ interface IPasswordInputProps {
 	size: Size
 	variant: Variant
 	register: UseFormRegister<any>
+	registerName: string
 	rules?: RegisterOptions
 }
 
@@ -21,6 +22,7 @@ export function PasswordField({
 	size,
 	variant,
 	register,
+	registerName,
 	rules
 }: IPasswordInputProps) {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false)
@@ -46,7 +48,7 @@ export function PasswordField({
 					{isPasswordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
 				</Button>
 			}
-			{...register('password', rules)}
+			{...register(registerName, rules)}
 		/>
 	)
 }
