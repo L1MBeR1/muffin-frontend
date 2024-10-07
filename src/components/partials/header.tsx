@@ -18,6 +18,8 @@ import { useState } from 'react'
 import { APP_PAGES } from '@/config/pages-url.config'
 
 import { ProfileButton } from './profileButton'
+import Logo from '@/images/svgs/logo.svg'
+import { padding } from '@/theme/padding'
 
 export function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -25,9 +27,14 @@ export function Header() {
 
 	return (
 		<Navbar
-			onMenuOpenChange={setIsMenuOpen}
+			className={`${padding} fixed top-0 left-0 w-full z-50`}
 			maxWidth='full'
+			onMenuOpenChange={setIsMenuOpen}
 			isBlurred={false}
+			classNames={{
+				wrapper: '!p-0',
+				content: '!p-0'
+			}}
 		>
 			<div className='grid grid-cols-3 items-center w-full'>
 				<NavbarContent className='md:hidden'>
@@ -35,26 +42,26 @@ export function Header() {
 						aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
 					/>
 				</NavbarContent>
-				<NavbarContent className='hidden md:flex gap-6 justify-start'>
+				<NavbarContent className='hidden md:flex gap-6 justify-start font-semibold'>
 					<NavbarItem>
-						<Link>Продукция</Link>
+						<Link color='secondary'>Продукция</Link>
 					</NavbarItem>
 					<NavbarItem>
-						<Link>О нас</Link>
+						<Link color='secondary'>О нас</Link>
 					</NavbarItem>
 					<NavbarItem>
-						<Link>Адреса и контакты</Link>
+						<Link color='secondary'>Адреса и контакты</Link>
 					</NavbarItem>
 				</NavbarContent>
 
-				{/* Центр — бренд компании */}
 				<NavbarContent className='justify-self-center'>
 					<NavbarBrand
+						className='cursor-pointer'
 						onClick={() => {
 							push(APP_PAGES.HOME)
 						}}
 					>
-						<p className='font-bold text-inherit text-center'>ACME</p>
+						<Logo />
 					</NavbarBrand>
 				</NavbarContent>
 
@@ -65,7 +72,7 @@ export function Header() {
 					<NavbarItem>
 						<Button
 							isIconOnly
-							color='primary'
+							color='secondary'
 							variant='light'
 						>
 							<ShoppingBasket />

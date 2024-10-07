@@ -9,10 +9,13 @@ export default function Base({
 	children: React.ReactNode
 }>) {
 	return (
-		<div className='main text-foreground bg-background'>
+		<div className='light'>
 			<Header />
 			<Toaster />
-			<main>{children}</main>
+			<main className='flex flex-row'>
+				<aside>cайдбар</aside>
+				{children}
+			</main>
 			<Footer />
 		</div>
 	)

@@ -46,10 +46,11 @@ export default function AccountData() {
 				onOpenChange={setOpenPasswordModal}
 			/>
 			<div className='flex flex-col space-y-4'>
-				<div className='flex flex-col'>
-					<h3>Почта</h3>
-					<div className='flex-row'>
-						{maskedEmail(account.email)}
+				<h2 className='text-3xl'>Данные аккаунта</h2>
+				<div className='flex flex-col space-y-2'>
+					<h3 className='text-lg'>Почта</h3>
+					<div className='flex flex-row items-center space-x-4'>
+						<p>{maskedEmail(account.email)}</p>
 						<Button
 							onClick={() => {
 								setOpenEmailModal(true)
@@ -59,8 +60,8 @@ export default function AccountData() {
 						</Button>
 					</div>
 				</div>
-				<div className='flex flex-col'>
-					<h3>Пароль</h3>
+				<div className='flex flex-col space-y-2'>
+					<h3 className='text-lg'>Пароль</h3>
 					<div className='flex-row'>
 						<Button
 							onClick={() => {

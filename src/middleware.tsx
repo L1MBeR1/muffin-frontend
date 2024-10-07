@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { APP_PAGES } from './config/pages-url.config'
-import { EnumTokens } from './services/auth-token.service'
 
 export async function middleware(request: NextRequest) {
-	const { cookies } = request
+	const authToken = request.cookies.get('accessToken')?.value
 
-	const refreshToken = cookies.get(EnumTokens.REFRESH_TOKEN)?.value
-
-	if (!refreshToken) {
+	if (!authToken) {
 		return NextResponse.redirect(new URL(APP_PAGES.HOME, request.url))
 	}
-	console.log(cookies)
+
+	console.log('Access token found in cookies:', authToken)
+
 	return NextResponse.next()
 }
 

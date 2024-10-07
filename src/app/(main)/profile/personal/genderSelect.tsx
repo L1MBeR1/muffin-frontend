@@ -26,8 +26,8 @@ const CustomRadio = ({ selected, ...props }: CustomRadioProps) => {
 		<Component
 			{...getBaseProps()}
 			className={cn(
-				'group inline-flex items-center justify-between hover:bg-content2',
-				'max-w-[300px] cursor-pointer border-2 border-default rounded-lg gap-4 p-4',
+				'group inline-flex items-center hover:bg-content2 grow justify-center',
+				'cursor-pointer border-2 border-default rounded-lg gap-4 p-4',
 				{ 'data-[selected=true]:border-primary': selected }
 			)}
 		>

@@ -12,10 +12,11 @@ export const metadata: Metadata = {
 
 export default function Personal() {
 	return (
-		<div className='flex flex-col'>
-			<h2>Личные данные</h2>
+		<div
+			className='flex flex-col p-5 rounded-2xl space-y-8 max-w-2xl w-full'
+			style={{ backgroundColor: 'hsl(var(--nextui-surface))' }}
+		>
 			<ProfileData />
-			<h2>Данные аккаунта</h2>
 			<AccountData />
 		</div>
 	)
