@@ -21,7 +21,7 @@ interface IOrder {
 }
 
 interface IProduct {
-	id: number 
+	id: number
 	name: string
 	orders: IOrder[]
 }
@@ -40,11 +40,7 @@ export default function Orders() {
 	const [endDate, setEndDate] = useState<string | undefined>(undefined)
 	const [productId, setProductId] = useState<string | undefined>(undefined)
 
-	const { data, isLoading, isFetching, error } = useProductOrders({
-		startDate,
-		endDate,
-		productId
-	})
+	const { data, isLoading, isFetching, error } = useProductOrders({})
 
 	if (isLoading || isFetching) {
 		return <div>Loading...</div>
@@ -67,15 +63,14 @@ export default function Orders() {
 						data.map((product: IProduct) => {
 							const { id, name, orders } = product
 
-
-							const productKey = id.toString() 
-							let productTotal = 0 
+							const productKey = id.toString()
+							let productTotal = 0
 
 							return (
 								<React.Fragment key={productKey}>
 									{orders.map((order, index) => {
 										const price = parseFloat(order.totalPrice)
-										productTotal += price 
+										productTotal += price
 										return (
 											<TableRow key={`${productKey}-${index}`}>
 												<TableCell>{index === 0 ? name : ''}</TableCell>
