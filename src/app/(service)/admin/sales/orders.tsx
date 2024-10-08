@@ -40,11 +40,7 @@ export default function Orders() {
 	const [endDate, setEndDate] = useState<string | undefined>(undefined)
 	const [productId, setProductId] = useState<string | undefined>(undefined)
 
-	const { data, isLoading, isFetching, error } = useProductOrders({
-		startDate,
-		endDate,
-		productId
-	})
+	const { data, isLoading, isFetching, error } = useProductOrders({})
 
 	if (isLoading || isFetching) {
 		return <div>Loading...</div>
