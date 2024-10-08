@@ -1,5 +1,5 @@
 import ProfileList from './profileList'
-import { padding } from '@/theme/padding'
+import { padding } from '@/theme/paddings'
 
 export default function ProfileLayout({
 	children

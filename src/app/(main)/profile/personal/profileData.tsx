@@ -51,10 +51,13 @@ export default function ProfileData() {
 		setProfile(prev => ({ ...prev, [name]: value }))
 	}
 
-	const handleDateChange = (date: DateValue | null) => {
+	const handleDateChange = (date: string | DateValue | null) => {
 		setProfile(prev => ({
 			...prev,
-			birthDate: date ? date.toDate(getLocalTimeZone()).toISOString() : null
+			birthDate:
+				typeof date === 'string'
+					? date
+					: date?.toDate(getLocalTimeZone()).toISOString() || null
 		}))
 	}
 
@@ -127,6 +130,8 @@ export default function ProfileData() {
 					variant='bordered'
 					isoDate={profile.birthDate}
 					onChange={handleDateChange}
+					useISO={true}
+					label='Дата рождения'
 				/>
 				<GenderSelector
 					onChange={handleGenderChange}

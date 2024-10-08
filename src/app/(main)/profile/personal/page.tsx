@@ -14,7 +14,7 @@ export default function Personal() {
 	return (
 		<div
 			className='flex flex-col p-5 rounded-2xl space-y-8 max-w-2xl w-full'
-			style={{ backgroundColor: 'hsl(var(--nextui-surface))' }}
+			// style={{ backgroundColor: '#ffefe0' }}
 		>
 			<ProfileData />
 			<AccountData />

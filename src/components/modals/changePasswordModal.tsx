@@ -130,7 +130,7 @@ const ChangePasswordModal = ({
 								Назад
 							</Button>
 							<Button
-								color='primary'
+								color='secondary'
 								variant='solid'
 								type='submit'
 								disabled={loading}

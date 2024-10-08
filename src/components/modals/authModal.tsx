@@ -52,7 +52,7 @@ const AuthModalContainer = ({
 				</ModalBody>
 				<ModalFooter className='justify-center'>
 					<Button
-						color='primary'
+						color='secondary'
 						variant='light'
 						onClick={toggleForm}
 						size='lg'

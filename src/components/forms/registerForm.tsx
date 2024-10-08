@@ -19,11 +19,16 @@ interface RegisterFormProps {
 }
 
 const RegisterForm = ({ onToggle, onOpenChange }: RegisterFormProps) => {
-	const { register, handleSubmit, reset } = useForm<IAuthForm>()
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors }
+	} = useForm<IAuthForm>()
 
 	const queryClient = useQueryClient()
 	const [loading, setLoading] = useState(false)
-	const [authError, setAuthError] = useState<string | null>(null)
+	const [error, setError] = useState<string | null>(null)
 	const { push } = useRouter()
 
 	const { mutate } = useMutation({
@@ -31,7 +36,7 @@ const RegisterForm = ({ onToggle, onOpenChange }: RegisterFormProps) => {
 		mutationFn: (data: IAuthForm) => authService.register(data),
 		onMutate() {
 			setLoading(true)
-			setAuthError(null)
+			setError(null)
 		},
 		onSuccess() {
 			toast.success('Успешная регистрация!')
@@ -41,7 +46,7 @@ const RegisterForm = ({ onToggle, onOpenChange }: RegisterFormProps) => {
 			queryClient.refetchQueries({ queryKey: ['profile'], type: 'active' })
 		},
 		onError(error: any) {
-			setAuthError('Ошибка при регистрации. Проверьте данные.')
+			setError('Ошибка при регистрации. Проверьте данные.')
 		},
 		onSettled() {
 			setLoading(false)
@@ -49,8 +54,17 @@ const RegisterForm = ({ onToggle, onOpenChange }: RegisterFormProps) => {
 	})
 
 	const onSubmit: SubmitHandler<IAuthForm> = data => {
+		if (!data.email || !data.password || !data.confirmPassword) {
+			setError('Пожалуйста, заполните все поля.')
+			return
+		}
+		if (data.password !== data.confirmPassword) {
+			setError('Пароли не совпадают')
+			return
+		}
 		mutate(data)
 	}
+
 	return (
 		<form
 			className='flex flex-col gap-3'
@@ -61,25 +75,49 @@ const RegisterForm = ({ onToggle, onOpenChange }: RegisterFormProps) => {
 				placeholder='Введите почту'
 				size={'lg'}
 				variant={'bordered'}
-				{...register('email', { required: true })}
+				{...register('email', { required: 'Почта обязательна' })}
+				isInvalid={!!errors.email}
 			/>
+			<div className='space-y-2'>
+				<PasswordField
+					label='Пароль'
+					placeholder='Введите ваш пароль'
+					register={register}
+					registerName='password'
+					size={'lg'}
+					variant={'bordered'}
+					isInvalid={!!errors.password}
+					rules={{
+						required: 'Пароль обязателен',
+						minLength: {
+							value: 6,
+							message: 'Пароль должен содержать минимум 6 символов'
+						}
+					}}
+				/>
+				<div className='pl-2 text-sm'>
+					<p>Пароль должен содержать минимум 6 символов</p>
+				</div>
+			</div>
 			<PasswordField
-				label='Пароль'
-				placeholder='Введите ваш пароль'
+				label='Повторите пароль'
+				placeholder='Введите пароль снова'
 				register={register}
-				registerName='password'
+				registerName='confirmPassword'
 				size={'lg'}
 				variant={'bordered'}
+				isInvalid={!!errors.confirmPassword}
 				rules={{
-					required: 'Пароль обязателен',
+					required: 'Повтор пароля обязателен',
 					minLength: {
 						value: 6,
 						message: 'Пароль должен содержать минимум 6 символов'
 					}
 				}}
 			/>
+			{error && <p className='text-red-600'>{error}</p>}{' '}
 			<Button
-				color='primary'
+				color='secondary'
 				className='full'
 				type='submit'
 				size={'lg'}

@@ -8,8 +8,7 @@ import {
 	NavbarContent,
 	NavbarItem,
 	NavbarMenu,
-	NavbarMenuItem,
-	NavbarMenuToggle
+	NavbarMenuItem
 } from '@nextui-org/react'
 import { ShoppingBasket } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -19,43 +18,27 @@ import { APP_PAGES } from '@/config/pages-url.config'
 
 import { ProfileButton } from './profileButton'
 import Logo from '@/images/svgs/logo.svg'
-import { padding } from '@/theme/paddings'
+import { servicePadding } from '@/theme/paddings'
 
-export function Header() {
+export function ServiceHeader() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const { push } = useRouter()
 
 	return (
 		<Navbar
 			isBordered
-			className={`${padding} fixed top-0 left-0 w-full z-50`}
+			className={`${servicePadding}`}
 			maxWidth='full'
 			onMenuOpenChange={setIsMenuOpen}
 			isBlurred={false}
+			position='static'
 			classNames={{
 				wrapper: '!p-0',
 				content: '!p-0'
 			}}
 		>
-			<div className='grid grid-cols-3 items-center w-full'>
-				<NavbarContent className='md:hidden'>
-					<NavbarMenuToggle
-						aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-					/>
-				</NavbarContent>
-				<NavbarContent className='hidden md:flex gap-6 justify-start font-semibold'>
-					<NavbarItem>
-						<Link color='secondary'>Продукция</Link>
-					</NavbarItem>
-					<NavbarItem>
-						<Link color='secondary'>О нас</Link>
-					</NavbarItem>
-					<NavbarItem>
-						<Link color='secondary'>Адреса и контакты</Link>
-					</NavbarItem>
-				</NavbarContent>
-
-				<NavbarContent className='justify-self-center'>
+			<div className='grid grid-cols-2 items-center w-full'>
+				<NavbarContent>
 					<NavbarBrand
 						className='cursor-pointer'
 						onClick={() => {

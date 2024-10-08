@@ -27,7 +27,7 @@ const CustomRadio = ({ selected, ...props }: CustomRadioProps) => {
 			{...getBaseProps()}
 			className={cn(
 				'group inline-flex items-center hover:bg-content2 grow justify-center',
-				'cursor-pointer border-2 border-default rounded-lg gap-4 p-4',
+				'cursor-pointer border-3 border-default rounded-xl whgap-4 p-4',
 				{ 'data-[selected=true]:border-primary': selected }
 			)}
 		>
@@ -67,13 +67,13 @@ export default function GenderSelector({
 				value={EnumGender.male}
 				selected={selectedGender === EnumGender.male}
 			>
-				Мужчина
+				Мужской
 			</CustomRadio>
 			<CustomRadio
 				value={EnumGender.female}
 				selected={selectedGender === EnumGender.female}
 			>
-				Женщина
+				Женский
 			</CustomRadio>
 		</RadioGroup>
 	)

@@ -52,6 +52,8 @@ export default function AccountData() {
 					<div className='flex flex-row items-center space-x-4'>
 						<p>{maskedEmail(account.email)}</p>
 						<Button
+							color='secondary'
+							variant='flat'
 							onClick={() => {
 								setOpenEmailModal(true)
 							}}
@@ -64,6 +66,8 @@ export default function AccountData() {
 					<h3 className='text-lg'>Пароль</h3>
 					<div className='flex-row'>
 						<Button
+							color='secondary'
+							variant='flat'
 							onClick={() => {
 								setOpenPasswordModal(true)
 							}}

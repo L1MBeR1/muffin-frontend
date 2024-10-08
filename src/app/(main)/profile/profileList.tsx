@@ -13,7 +13,7 @@ export default function ProfileTabs() {
 	return (
 		<div
 			className='w-96 space-y-4 p-5 rounded-2xl h-fit'
-			style={{ backgroundColor: 'hsl(var(--nextui-surface))' }}
+			// style={{ backgroundColor: '#ffefe0' }}
 		>
 			<LogoutModal
 				isOpen={openModal}

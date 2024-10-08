@@ -34,7 +34,7 @@ module.exports = {
 					layout: {}, // dark theme layout tokens
 					colors: {
 						background: '#FCF2F3',
-						// content1: ColorScale;
+						content1: '#FCF2F3',
 						// content2: ColorScale;
 						// content3: ColorScale;
 						// content4: ColorScale;
@@ -93,8 +93,7 @@ module.exports = {
 							900: '#1e0c00',
 							DEFAULT: '#F98D08',
 							foreground: '#000000'
-						},
-						
+						}
 					}
 				}
 			}

@@ -105,7 +105,7 @@ const ChangeEmailModal = ({ isOpen, onOpenChange }: ChangeEmailModalProps) => {
 								Назад
 							</Button>
 							<Button
-								color='primary'
+								color='secondary'
 								variant='solid'
 								type='submit'
 								disabled={loading}

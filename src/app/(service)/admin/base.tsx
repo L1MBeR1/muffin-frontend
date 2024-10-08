@@ -1,7 +1,9 @@
 import { Toaster } from 'sonner'
 
-import { Footer } from '@/components/partials/footer'
-import { Header } from '@/components/partials/header'
+import { ServiceHeader } from '@/components/partials/serviceHeader'
+
+import Sidebar from './sidebar'
+import { servicePadding } from '@/theme/paddings'
 
 export default function Base({
 	children
@@ -9,14 +11,13 @@ export default function Base({
 	children: React.ReactNode
 }>) {
 	return (
-		<div className='light'>
-			<Header />
+		<div className='main text-foreground bg-background'>
+			<ServiceHeader />
 			<Toaster />
-			<main className='flex flex-row'>
-				<aside>cайдбар</aside>
+			<main className={`${servicePadding} flex flex-row space-x-8 mt-8`}>
+				<Sidebar />
 				{children}
 			</main>
-			<Footer />
 		</div>
 	)
 }

@@ -1,6 +1,7 @@
 export interface IAuthForm {
 	email: string
 	password: string
+	confirmPassword?: string
 }
 export enum EnumGender {
 	male = 'male',

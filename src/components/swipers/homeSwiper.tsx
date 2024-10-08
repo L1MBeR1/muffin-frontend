@@ -13,7 +13,7 @@ import blank from '@/images/webps/blank.webp'
 import homeSwiper1 from '@/images/webps/homeSwiper1.webp'
 import homeSwiper2 from '@/images/webps/homeSwiper2.webp'
 import homeSwiper3 from '@/images/webps/homeSwiper3.webp'
-import { padding } from '@/theme/padding'
+import { padding } from '@/theme/paddings'
 
 function NavigationButtons() {
 	const swiper = useSwiper()

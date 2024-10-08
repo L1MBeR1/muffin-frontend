@@ -3,3 +3,8 @@ export interface IProductsOrders {
 	endDate?: string | null
 	productId?: number | null
 }
+
+export interface SelectProduct {
+	id: number
+	name: string
+}

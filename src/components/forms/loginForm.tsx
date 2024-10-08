@@ -20,7 +20,12 @@ interface LoginFormProps {
 
 const LoginForm = ({ onToggle, onOpenChange }: LoginFormProps) => {
 	const queryClient = useQueryClient()
-	const { register, handleSubmit, reset } = useForm<IAuthForm>()
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors }
+	} = useForm<IAuthForm>()
 	const [loading, setLoading] = useState(false)
 	const [authError, setAuthError] = useState<string | null>(null)
 	const { push } = useRouter()
@@ -50,6 +55,7 @@ const LoginForm = ({ onToggle, onOpenChange }: LoginFormProps) => {
 	const onSubmit: SubmitHandler<IAuthForm> = data => {
 		mutate(data)
 	}
+
 	return (
 		<form
 			className='flex flex-col gap-3'
@@ -60,8 +66,10 @@ const LoginForm = ({ onToggle, onOpenChange }: LoginFormProps) => {
 				placeholder='Введите почту'
 				size={'lg'}
 				variant={'bordered'}
-				{...register('email', { required: true })}
+				isInvalid={!!errors.email}
+				{...register('email', { required: 'Почта обязательна' })}
 			/>
+
 			<PasswordField
 				label='Пароль'
 				placeholder='Введите ваш пароль'
@@ -69,6 +77,7 @@ const LoginForm = ({ onToggle, onOpenChange }: LoginFormProps) => {
 				registerName='password'
 				size={'lg'}
 				variant={'bordered'}
+				isInvalid={!!errors.password}
 				rules={{
 					required: 'Пароль обязателен',
 					minLength: {
@@ -80,7 +89,7 @@ const LoginForm = ({ onToggle, onOpenChange }: LoginFormProps) => {
 			{authError && <div className='text-red-500 text-sm'>{authError}</div>}
 			<Button
 				className='full'
-				color='primary'
+				color='secondary'
 				type='submit'
 				size='lg'
 				isLoading={loading}
