@@ -1,4 +1,5 @@
-import { IProfile, IUser } from '@/types/auth.types'
+import { IUser } from '@/types/auth.types'
+import { IChangeEmail, IChangePassword, IProfile } from '@/types/user.types'
 
 import { axiosWithAuth } from '@/api/interceptors'
 
@@ -15,6 +16,18 @@ class UserService {
 	}
 	async updateProfile(profile: IProfile) {
 		const response = await axiosWithAuth.put(this.BASE_URL, profile)
+		return response.data
+	}
+
+	async updateEmail(profile: IChangeEmail) {
+		const response = await axiosWithAuth.put(`${this.BASE_URL}/email`, profile)
+		return response.data
+	}
+	async updatePassword(profile: IChangePassword) {
+		const response = await axiosWithAuth.put(
+			`${this.BASE_URL}/password`,
+			profile
+		)
 		return response.data
 	}
 }

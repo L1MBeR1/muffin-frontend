@@ -35,23 +35,34 @@ export default function ProfileData() {
 		})
 	}, [data])
 
+	useEffect(() => {
+		// Проверяем, изменились ли данные
+		const isProfileChanged =
+			profile.firstName !== data?.firstName ||
+			profile.lastName !== data?.lastName ||
+			profile.birthDate !== data?.birthDate ||
+			profile.gender !== data?.gender
+
+		setIsEdited(isProfileChanged)
+	}, [profile, data])
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
 		setProfile(prev => ({ ...prev, [name]: value }))
-		setIsEdited(true)
 	}
 
-	const handleDateChange = (date: DateValue | null) => {
+	const handleDateChange = (date: string | DateValue | null) => {
 		setProfile(prev => ({
 			...prev,
-			birthDate: date ? date.toDate(getLocalTimeZone()).toISOString() : null
+			birthDate:
+				typeof date === 'string'
+					? date
+					: date?.toDate(getLocalTimeZone()).toISOString() || null
 		}))
-		setIsEdited(true)
 	}
 
 	const handleGenderChange = (gender: EnumGender) => {
 		setProfile(prev => ({ ...prev, gender }))
-		setIsEdited(true)
 	}
 
 	const queryClient = useQueryClient()
@@ -91,53 +102,60 @@ export default function ProfileData() {
 	}
 
 	return (
-		<div className='flex flex-col space-y-4'>
-			<Input
-				size='lg'
-				variant='bordered'
-				label='Имя'
-				name='firstName'
-				placeholder='Введите своё имя'
-				value={profile.firstName}
-				onChange={handleChange}
-				isDisabled={loading}
-			/>
-			<Input
-				size='lg'
-				variant='bordered'
-				label='Фамилия'
-				name='lastName'
-				placeholder='Введите свою фамилию'
-				value={profile.lastName}
-				onChange={handleChange}
-				isDisabled={loading}
-			/>
-			<DateField
-				size='lg'
-				variant='bordered'
-				isoDate={profile.birthDate}
-				onChange={handleDateChange}
-			/>
-			<GenderSelector
-				onChange={handleGenderChange}
-				selectedGender={profile.gender}
-			/>{' '}
-			{isEdited && (
-				<div className='flex space-x-4'>
-					<Button
-						onClick={handleSave}
-						isDisabled={loading}
-					>
-						Сохранить
-					</Button>
-					<Button
-						onClick={handleCancel}
-						variant='light'
-					>
-						Отменить
-					</Button>
-				</div>
-			)}
-		</div>
+		<>
+			<div className='flex flex-col space-y-4'>
+				<h2 className='text-3xl'>Личные данные</h2>
+				<Input
+					size='lg'
+					variant='bordered'
+					label='Имя'
+					name='firstName'
+					placeholder='Введите своё имя'
+					value={profile.firstName}
+					onChange={handleChange}
+					isDisabled={loading}
+				/>
+				<Input
+					size='lg'
+					variant='bordered'
+					label='Фамилия'
+					name='lastName'
+					placeholder='Введите свою фамилию'
+					value={profile.lastName}
+					onChange={handleChange}
+					isDisabled={loading}
+				/>
+				<DateField
+					size='lg'
+					variant='bordered'
+					isoDate={profile.birthDate}
+					onChange={handleDateChange}
+					useISO={true}
+					label='Дата рождения'
+				/>
+				<GenderSelector
+					onChange={handleGenderChange}
+					selectedGender={profile.gender}
+				/>{' '}
+				{isEdited && (
+					<div className='flex space-x-4'>
+						<Button
+							onClick={handleSave}
+							isDisabled={loading}
+							color='primary'
+						>
+							Сохранить
+						</Button>
+						<Button
+							onClick={handleCancel}
+							variant='flat'
+							color='danger'
+						>
+							Отменить
+						</Button>
+					</div>
+				)}
+			</div>
+		</>
 	)
 }

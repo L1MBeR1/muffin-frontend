@@ -9,7 +9,7 @@ export default function Base({
 	children: React.ReactNode
 }>) {
 	return (
-		<div>
+		<div className='main text-foreground bg-background'>
 			<Header />
 			<Toaster />
 			<main>{children}</main>

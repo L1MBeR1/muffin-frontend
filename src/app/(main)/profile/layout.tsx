@@ -1,4 +1,5 @@
 import ProfileList from './profileList'
+import { padding } from '@/theme/paddings'
 
 export default function ProfileLayout({
 	children
@@ -6,11 +7,9 @@ export default function ProfileLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<div className='flex flex-row'>
-			<div>
-				<ProfileList />
-			</div>
-			<div>{children}</div>
+		<div className={`${padding} mt-20 flex flex-row space-x-16`}>
+			<ProfileList />
+			{children}
 		</div>
 	)
 }

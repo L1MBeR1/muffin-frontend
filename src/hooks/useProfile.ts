@@ -10,4 +10,5 @@ const useProfile = () => {
 		retry: 0
 	})
 }
+
 export default useProfile

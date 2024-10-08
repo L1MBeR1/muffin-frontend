@@ -1,6 +1,6 @@
 'use client'
 
-import { DateValue, parseDate } from '@internationalized/date'
+import { DateValue, getLocalTimeZone, parseDate } from '@internationalized/date'
 import { DatePicker } from '@nextui-org/react'
 import { useDateFormatter } from '@react-aria/i18n'
 import { parseISO } from 'date-fns'
@@ -12,34 +12,44 @@ interface DateFieldProps {
 	isoDate: string | null
 	size: Size
 	variant: Variant
-	onChange: (date: DateValue | null) => void
+	label: string
+	useISO?: boolean
+	onChange: (date: DateValue | null | string) => void
 }
 
 export default function DateField({
 	isoDate,
 	size,
 	variant,
-	onChange
+	onChange,
+	label,
+	useISO = false
 }: DateFieldProps) {
 	const [value, setValue] = useState<DateValue | null>(null)
 	const formatter = useDateFormatter({ dateStyle: 'full' })
 
 	useEffect(() => {
-		if (isoDate) {
+		if (isoDate && useISO) {
 			const parsedDate = parseISO(isoDate)
 			setValue(parseDate(parsedDate.toISOString().split('T')[0]))
 		}
-	}, [isoDate])
+	}, [isoDate, useISO])
 
 	const handleDateChange = (newDate: DateValue | null) => {
 		setValue(newDate)
-		onChange(newDate)
+
+		if (useISO && newDate) {
+			const formattedDate = newDate.toDate(getLocalTimeZone()).toISOString()
+			onChange(formattedDate)
+		} else {
+			onChange(newDate)
+		}
 	}
 
 	return (
 		<div className='flex flex-col gap-y-2'>
 			<DatePicker
-				label='День рождения'
+				label={label}
 				value={value}
 				size={size}
 				variant={variant}

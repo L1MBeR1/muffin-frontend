@@ -63,7 +63,7 @@ const LogoutModal = ({ isOpen, onOpenChange }: ILogoutModalProps) => {
 						<ModalBody>Вы действительно хотите выйти?</ModalBody>
 						<ModalFooter>
 							<Button
-								color='primary'
+								color='secondary'
 								variant='light'
 								size='lg'
 								onPress={onClose}
@@ -72,7 +72,7 @@ const LogoutModal = ({ isOpen, onOpenChange }: ILogoutModalProps) => {
 							</Button>
 							<Button
 								color='danger'
-								variant='light'
+								variant='flat'
 								onClick={() => {
 									handleLogout()
 								}}

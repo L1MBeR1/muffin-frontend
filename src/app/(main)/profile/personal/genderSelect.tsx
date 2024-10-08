@@ -1,4 +1,3 @@
-// Убедитесь, что путь к типам правильный
 import {
 	RadioGroup,
 	RadioProps,
@@ -27,8 +26,8 @@ const CustomRadio = ({ selected, ...props }: CustomRadioProps) => {
 		<Component
 			{...getBaseProps()}
 			className={cn(
-				'group inline-flex items-center justify-between hover:bg-content2',
-				'max-w-[300px] cursor-pointer border-2 border-default rounded-lg gap-4 p-4',
+				'group inline-flex items-center hover:bg-content2 grow justify-center',
+				'cursor-pointer border-3 border-default rounded-xl whgap-4 p-4',
 				{ 'data-[selected=true]:border-primary': selected }
 			)}
 		>
@@ -60,20 +59,21 @@ export default function GenderSelector({
 	return (
 		<RadioGroup
 			label='Пол'
-			orientation={'horizontal'}
+			orientation='horizontal'
 			onChange={handleChange}
+			value={selectedGender || undefined}
 		>
 			<CustomRadio
 				value={EnumGender.male}
 				selected={selectedGender === EnumGender.male}
 			>
-				Мужчина
+				Мужской
 			</CustomRadio>
 			<CustomRadio
 				value={EnumGender.female}
 				selected={selectedGender === EnumGender.female}
 			>
-				Женщина
+				Женский
 			</CustomRadio>
 		</RadioGroup>
 	)

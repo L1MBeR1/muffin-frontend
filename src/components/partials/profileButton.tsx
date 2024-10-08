@@ -37,8 +37,8 @@ export function ProfileButton() {
 			) : (
 				<Button
 					isIconOnly
-					color='primary'
 					variant='light'
+					color='secondary'
 					onClick={() => {
 						handleButtonClick()
 					}}

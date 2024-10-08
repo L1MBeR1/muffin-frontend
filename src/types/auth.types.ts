@@ -1,6 +1,7 @@
 export interface IAuthForm {
 	email: string
 	password: string
+	confirmPassword?: string
 }
 export enum EnumGender {
 	male = 'male',
@@ -24,12 +25,6 @@ export interface IUser {
 	createdAt: string
 	updatedAt: string
 	roles: EnumRoles[]
-}
-export interface IProfile {
-	firstName?: string | null
-	lastName?: string | null
-	birthDate?: string | null
-	gender?: EnumGender | null
 }
 export interface IAuthResponse {
 	accessToken: string

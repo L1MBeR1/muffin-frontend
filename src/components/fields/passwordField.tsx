@@ -12,7 +12,10 @@ interface IPasswordInputProps {
 	size: Size
 	variant: Variant
 	register: UseFormRegister<any>
+	registerName: string
 	rules?: RegisterOptions
+	isInvalid?: boolean
+	errorMessage?: string
 }
 
 export function PasswordField({
@@ -21,7 +24,10 @@ export function PasswordField({
 	size,
 	variant,
 	register,
-	rules
+	registerName,
+	rules,
+	isInvalid,
+	errorMessage
 }: IPasswordInputProps) {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
@@ -30,23 +36,27 @@ export function PasswordField({
 	}
 
 	return (
-		<Input
-			label={label}
-			placeholder={placeholder}
-			type={isPasswordVisible ? 'text' : 'password'}
-			variant={variant}
-			size={size}
-			endContent={
-				<Button
-					isIconOnly
-					variant='light'
-					onPress={togglePasswordVisibility}
-					aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
-				>
-					{isPasswordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
-				</Button>
-			}
-			{...register('password', rules)}
-		/>
+		<>
+			<Input
+				label={label}
+				placeholder={placeholder}
+				type={isPasswordVisible ? 'text' : 'password'}
+				variant={variant}
+				size={size}
+				endContent={
+					<Button
+						isIconOnly
+						variant='light'
+						onPress={togglePasswordVisibility}
+						aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
+					>
+						{isPasswordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
+					</Button>
+				}
+				isInvalid={isInvalid}
+				errorMessage={errorMessage}
+				{...register(registerName, rules)}
+			/>
+		</>
 	)
 }

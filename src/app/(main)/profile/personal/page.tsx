@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
-import ProfileData from './personalData'
+import AccountData from './accountData'
+import ProfileData from './profileData'
 
 export const metadata: Metadata = {
 	title: 'Профиль',
@@ -11,10 +12,12 @@ export const metadata: Metadata = {
 
 export default function Personal() {
 	return (
-		<div className='flex flex-col'>
-			<h2>Личные данные</h2>
+		<div
+			className='flex flex-col p-5 rounded-2xl space-y-8 max-w-2xl w-full'
+			// style={{ backgroundColor: '#ffefe0' }}
+		>
 			<ProfileData />
-			<h2>Данные аккаунта</h2>
+			<AccountData />
 		</div>
 	)
 }
