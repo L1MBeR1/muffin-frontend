@@ -14,7 +14,7 @@ interface DateFieldProps {
 	variant: Variant
 	label: string
 	useISO?: boolean
-	onChange: (date: DateValue | null) => void
+	onChange: (date: DateValue | null | string) => void
 }
 
 export default function DateField({

@@ -19,19 +19,29 @@ export default function Sales() {
 	const [fromDate, setFromDate] = useState<DateValue | null>(null)
 	const [toDate, setToDate] = useState<DateValue | null>(null)
 
-	const handleFromDateChange = (date: DateValue | null) => {
-		setFromDate(date)
-		console.log('Дата от изменена на:', date ? date.toString() : 'null')
+	const handleFromDateChange = (date: string | DateValue | null) => {
+		if (typeof date === 'string') {
+			console.log('Дата от изменена на (ISO):', date)
+		} else {
+			setFromDate(date)
+			console.log('Дата от изменена на:', date ? date.toString() : 'null')
+		}
 	}
 
-	const handleToDateChange = (date: DateValue | null) => {
-		setToDate(date)
-		console.log('Дата до изменена на:', date ? date.toString() : 'null')
+	const handleToDateChange = (date: string | DateValue | null) => {
+		if (typeof date === 'string') {
+			console.log('Дата до изменена на (ISO):', date)
+		} else {
+			setToDate(date)
+			console.log('Дата до изменена на:', date ? date.toString() : 'null')
+		}
 	}
+
 	const [selectedProduct, setSelectedProduct] = useState<string | null>(null)
 	const handleDelete = () => {
 		setSelectedProduct(null)
 	}
+
 	const renderTabContent = () => {
 		switch (selectedTab) {
 			case 'orders':
@@ -40,6 +50,7 @@ export default function Sales() {
 				return <></>
 		}
 	}
+
 	return (
 		<div className='flex flex-col space-y-4 grow'>
 			<h2 className='text-3xl'>Анализ продаж</h2>
