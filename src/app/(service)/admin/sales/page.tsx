@@ -10,6 +10,7 @@ import { SelectProduct } from '@/types/product.types'
 
 import useProductsForSelect from '@/hooks/useProductsForSelect'
 
+import Buyers from './buyers'
 import Orders from './orders'
 import SalesTabs from './tabs'
 
@@ -18,8 +19,9 @@ export default function Sales() {
 	const [selectedTab, setSelectedTab] = useState('orders')
 	const [fromDate, setFromDate] = useState<DateValue | null>(null)
 	const [toDate, setToDate] = useState<DateValue | null>(null)
+	const [selectedProduct, setSelectedProduct] = useState<number | null>(null)
 
-	const handleFromDateChange = (date: string | DateValue | null) => {
+	const handleFromDateChange = (date: DateValue | null | string) => {
 		if (typeof date === 'string') {
 			console.log('Дата от изменена на (ISO):', date)
 		} else {
@@ -28,7 +30,7 @@ export default function Sales() {
 		}
 	}
 
-	const handleToDateChange = (date: string | DateValue | null) => {
+	const handleToDateChange = (date: DateValue | null | string) => {
 		if (typeof date === 'string') {
 			console.log('Дата до изменена на (ISO):', date)
 		} else {
@@ -36,16 +38,30 @@ export default function Sales() {
 			console.log('Дата до изменена на:', date ? date.toString() : 'null')
 		}
 	}
-
-	const [selectedProduct, setSelectedProduct] = useState<string | null>(null)
-	const handleDelete = () => {
-		setSelectedProduct(null)
+	const handleProductChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const selectedValue = event.target.value
+		setSelectedProduct(selectedValue ? Number(selectedValue) : null)
+		console.log('Выбранный продукт:', selectedValue)
 	}
 
 	const renderTabContent = () => {
 		switch (selectedTab) {
 			case 'orders':
 				return <Orders />
+			case 'buyers':
+				return (
+					<Buyers
+						startDate={
+							fromDate
+								? fromDate.toDate(getLocalTimeZone()).toISOString()
+								: null
+						}
+						endDate={
+							toDate ? toDate.toDate(getLocalTimeZone()).toISOString() : null
+						}
+						productId={selectedProduct}
+					/>
+				)
 			default:
 				return <></>
 		}
@@ -58,6 +74,7 @@ export default function Sales() {
 				<DateField
 					size='lg'
 					variant='bordered'
+					color='secondary'
 					isoDate={
 						fromDate ? fromDate.toDate(getLocalTimeZone()).toISOString() : null
 					}
@@ -65,9 +82,11 @@ export default function Sales() {
 					label='Дата от'
 					useISO={false}
 				/>
+
 				<DateField
 					size='lg'
 					variant='bordered'
+					color='secondary'
 					isoDate={
 						toDate ? toDate.toDate(getLocalTimeZone()).toISOString() : null
 					}
@@ -75,6 +94,7 @@ export default function Sales() {
 					label='Дата до'
 					useISO={false}
 				/>
+
 				<div className='w-80'>
 					<Select
 						size='lg'
@@ -82,6 +102,7 @@ export default function Sales() {
 						label='Выберите продукт'
 						placeholder='Все'
 						className='grow'
+						onChange={handleProductChange}
 					>
 						{products?.map((product: SelectProduct) => (
 							<SelectItem
@@ -94,11 +115,13 @@ export default function Sales() {
 					</Select>
 				</div>
 			</div>
+
 			<SalesTabs
 				selectedTab={selectedTab}
 				setSelectedTab={setSelectedTab}
 			/>
-			<div>{renderTabContent()}</div>
+
+			{renderTabContent()}
 		</div>
 	)
 }

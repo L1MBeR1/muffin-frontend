@@ -13,7 +13,7 @@ export default function Sidebar() {
 	const pathname = usePathname()
 
 	return (
-		<div className='w-96 space-y-4 rounded-2xl h-fit'>
+		<div className='w-72 space-y-4 rounded-2xl h-fit'>
 			<Tabs
 				disabledKeys={[
 					'/admin/products',

@@ -1,17 +1,26 @@
 'use client'
 
 import { DateValue, getLocalTimeZone, parseDate } from '@internationalized/date'
-import { DatePicker } from '@nextui-org/react'
+import { Button, DatePicker } from '@nextui-org/react'
 import { useDateFormatter } from '@react-aria/i18n'
 import { parseISO } from 'date-fns'
+import { X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 type Variant = 'flat' | 'faded' | 'bordered' | 'underlined'
 type Size = 'sm' | 'md' | 'lg'
+type Color =
+	| 'default'
+	| 'primary'
+	| 'secondary'
+	| 'success'
+	| 'warning'
+	| 'danger'
 interface DateFieldProps {
 	isoDate: string | null
 	size: Size
 	variant: Variant
+	color?: Color
 	label: string
 	useISO?: boolean
 	onChange: (date: DateValue | null | string) => void
@@ -21,6 +30,7 @@ export default function DateField({
 	isoDate,
 	size,
 	variant,
+	color,
 	onChange,
 	label,
 	useISO = false
@@ -46,14 +56,35 @@ export default function DateField({
 		}
 	}
 
+	const handleClearDate = () => {
+		setValue(null)
+		onChange(null)
+	}
+
 	return (
 		<div className='flex flex-col gap-y-2'>
 			<DatePicker
 				label={label}
 				value={value}
 				size={size}
+				color={color}
 				variant={variant}
 				onChange={handleDateChange}
+				showMonthAndYearPickers
+				endContent={
+					value && (
+						<Button
+							// className='w-1.5 h-1.5'
+							isIconOnly
+							size='sm'
+							color={color}
+							variant='light'
+							onClick={handleClearDate}
+						>
+							<X size='20' />
+						</Button>
+					)
+				}
 			/>
 		</div>
 	)

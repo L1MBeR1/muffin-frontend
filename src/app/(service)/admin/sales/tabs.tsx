@@ -39,7 +39,7 @@ export default function SalesTabs({
 				/>
 				<Tab
 					className='justify-start'
-					key='customer-analysis'
+					key='buyers'
 					title='Анализ покупателей'
 				/>
 			</Tabs>
