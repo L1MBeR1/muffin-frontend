@@ -27,7 +27,7 @@ export function ServiceHeader() {
 	return (
 		<Navbar
 			isBordered
-			className={`${servicePadding}`}
+			className={`${servicePadding} fixed top-0 left-0 w-full z-50`}
 			maxWidth='full'
 			onMenuOpenChange={setIsMenuOpen}
 			isBlurred={false}

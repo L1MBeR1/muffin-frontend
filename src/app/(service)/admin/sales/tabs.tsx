@@ -5,16 +5,20 @@ import { Tab, Tabs } from '@nextui-org/react'
 interface SalesTabsProps {
 	selectedTab: string
 	setSelectedTab: (value: string) => void
+	isReportReady: boolean
 }
 
 export default function SalesTabs({
 	selectedTab,
-	setSelectedTab
+	setSelectedTab,
+	isReportReady
 }: SalesTabsProps) {
 	return (
 		<div className='w-fit space-y-4 rounded-2xl h-fit'>
 			<Tabs
-				disabledKeys={[]}
+				disabledKeys={
+					!isReportReady ? ['orders', 'buyers', 'bakeries', 'chart'] : []
+				}
 				variant='bordered'
 				selectedKey={selectedTab}
 				color='secondary'
@@ -34,7 +38,7 @@ export default function SalesTabs({
 				/>
 				<Tab
 					className='justify-start'
-					key='map'
+					key='bakeries'
 					title='Карта'
 				/>
 				<Tab

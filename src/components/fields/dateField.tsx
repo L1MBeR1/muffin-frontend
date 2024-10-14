@@ -1,10 +1,9 @@
 'use client'
 
 import { DateValue, getLocalTimeZone, parseDate } from '@internationalized/date'
-import { Button, DatePicker } from '@nextui-org/react'
+import { DatePicker } from '@nextui-org/react'
 import { useDateFormatter } from '@react-aria/i18n'
 import { parseISO } from 'date-fns'
-import { X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 type Variant = 'flat' | 'faded' | 'bordered' | 'underlined'
@@ -23,6 +22,8 @@ interface DateFieldProps {
 	color?: Color
 	label: string
 	useISO?: boolean
+	isInvalid?: boolean
+	errorMessage?: string | null
 	onChange: (date: DateValue | null | string) => void
 }
 
@@ -33,6 +34,8 @@ export default function DateField({
 	color,
 	onChange,
 	label,
+	isInvalid,
+	errorMessage,
 	useISO = false
 }: DateFieldProps) {
 	const [value, setValue] = useState<DateValue | null>(null)
@@ -71,20 +74,8 @@ export default function DateField({
 				variant={variant}
 				onChange={handleDateChange}
 				showMonthAndYearPickers
-				endContent={
-					value && (
-						<Button
-							// className='w-1.5 h-1.5'
-							isIconOnly
-							size='sm'
-							color={color}
-							variant='light'
-							onClick={handleClearDate}
-						>
-							<X size='20' />
-						</Button>
-					)
-				}
+				isInvalid={isInvalid}
+				errorMessage={errorMessage}
 			/>
 		</div>
 	)
