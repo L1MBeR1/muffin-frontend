@@ -8,12 +8,22 @@ import { useEffect, useState } from 'react'
 
 type Variant = 'flat' | 'faded' | 'bordered' | 'underlined'
 type Size = 'sm' | 'md' | 'lg'
+type Color =
+	| 'default'
+	| 'primary'
+	| 'secondary'
+	| 'success'
+	| 'warning'
+	| 'danger'
 interface DateFieldProps {
 	isoDate: string | null
 	size: Size
 	variant: Variant
+	color?: Color
 	label: string
 	useISO?: boolean
+	isInvalid?: boolean
+	errorMessage?: string | null
 	onChange: (date: DateValue | null | string) => void
 }
 
@@ -21,8 +31,11 @@ export default function DateField({
 	isoDate,
 	size,
 	variant,
+	color,
 	onChange,
 	label,
+	isInvalid,
+	errorMessage,
 	useISO = false
 }: DateFieldProps) {
 	const [value, setValue] = useState<DateValue | null>(null)
@@ -46,14 +59,23 @@ export default function DateField({
 		}
 	}
 
+	const handleClearDate = () => {
+		setValue(null)
+		onChange(null)
+	}
+
 	return (
 		<div className='flex flex-col gap-y-2'>
 			<DatePicker
 				label={label}
 				value={value}
 				size={size}
+				color={color}
 				variant={variant}
 				onChange={handleDateChange}
+				showMonthAndYearPickers
+				isInvalid={isInvalid}
+				errorMessage={errorMessage}
 			/>
 		</div>
 	)

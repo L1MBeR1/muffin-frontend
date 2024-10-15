@@ -6,9 +6,7 @@ const nextConfig = {
 			use: [
 				{
 					loader: '@svgr/webpack',
-					options: {
-						// Здесь можно добавить дополнительные настройки, если нужно
-					}
+					options: {}
 				}
 			]
 		})

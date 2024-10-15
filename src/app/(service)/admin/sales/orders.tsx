@@ -1,14 +1,7 @@
-'use client'
+import { Spinner } from '@nextui-org/react'
+import { useEffect } from 'react'
 
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableColumn,
-	TableHeader,
-	TableRow
-} from '@nextui-org/react'
-import { useState } from 'react'
+import { IProductsOrders } from '@/types/product.types'
 
 import useProductOrders from '@/hooks/admin/useProductsOrders'
 
@@ -31,55 +24,153 @@ const columns = [
 	{ key: 'orderNumber', label: 'Номер заказа' },
 	{ key: 'orderDate', label: 'Дата заказа' },
 	{ key: 'paymentDate', label: 'Дата оплаты' },
-	{ key: 'quantity', label: 'Количество' },
-	{ key: 'totalPrice', label: 'Стоимость' }
+	{ key: 'quantity', label: 'Количество (шт.)' },
+	{ key: 'totalPrice', label: 'Стоимость (руб.)' }
 ]
 
-export default function Orders() {
-	const [startDate, setStartDate] = useState<string | undefined>(undefined)
-	const [endDate, setEndDate] = useState<string | undefined>(undefined)
-	const [productId, setProductId] = useState<string | undefined>(undefined)
+export default function Orders({
+	startDate,
+	endDate,
+	productId
+}: IProductsOrders) {
+	const { data, isLoading, isFetching, error, refetch } = useProductOrders({
+		startDate,
+		endDate,
+		productId
+	})
 
-	const { data, isLoading, isFetching, error } = useProductOrders({})
+	useEffect(() => {
+		refetch()
+	}, [startDate, endDate, productId])
 
-	if (isLoading || isFetching) {
-		return <div>Loading...</div>
+	if (isFetching) {
+		return (
+			<div className='w-full h-full flex items-center justify-center'>
+				<Spinner
+					color='secondary'
+					size='lg'
+				/>
+			</div>
+		)
 	}
 
 	if (error) {
 		return <div>Error: {error.message}</div>
 	}
 
-	return (
-		<div className='flex flex-col'>
-			<Table aria-label='Product Orders Table'>
-				<TableHeader>
-					{columns.map(column => (
-						<TableColumn key={column.key}>{column.label}</TableColumn>
-					))}
-				</TableHeader>
-				<TableBody>
-					{data &&
-						data.map((product: IProduct) => {
-							const { id, name, orders } = product
+	if (
+		!data ||
+		data.length === 0 ||
+		data.every(
+			(product: { orders: string | any[] }) => product.orders.length === 0
+		)
+	) {
+		return (
+			<div className='w-full h-full flex items-center justify-center'>
+				<p className='text-xl'>Нет продаж по данному запросу</p>
+			</div>
+		)
+	}
 
-							return orders.map((order, index) => (
-								<TableRow key={`${id}-${index}`}>
-									<TableCell>{index === 0 ? name : ''}</TableCell>
-									<TableCell>{order.orderNumber}</TableCell>
-									<TableCell>
-										{new Date(order.orderDate).toLocaleDateString()}
-									</TableCell>
-									<TableCell>
-										{new Date(order.paymentDate).toLocaleDateString()}
-									</TableCell>
-									<TableCell>{order.quantity}</TableCell>
-									<TableCell>{order.totalPrice}</TableCell>
-								</TableRow>
-							))
-						})}
-				</TableBody>
-			</Table>
+	let totalAllQuantity = 0
+	let totalAllPrice = 0
+
+	return (
+		<div className='overflow-auto h-full'>
+			<table className='min-w-full bg-white border-2 border-gray-300'>
+				<thead className='sticky top-0 bg-primary-200 z-10'>
+					<tr>
+						{columns.map(column => (
+							<th
+								key={column.key}
+								className='px-4 py-2 border border-gray-300 text-md font-bold text-gray-700 text-center'
+							>
+								{column.label}
+							</th>
+						))}
+					</tr>
+				</thead>
+				<tbody>
+					{data.map((product: IProduct) => {
+						const { id, name, orders } = product
+
+						const totalProductPrice = orders.reduce(
+							(acc, order) => acc + parseFloat(order.totalPrice),
+							0
+						)
+						const totalProductQuantity = orders.reduce(
+							(acc, order) => acc + order.quantity,
+							0
+						)
+
+						totalAllQuantity += totalProductQuantity
+						totalAllPrice += totalProductPrice
+
+						return (
+							<>
+								{orders.map((order, index) => (
+									<tr
+										key={`${id}-${index}`}
+										className='even:bg-primary-50 odd:bg-secondary-50'
+									>
+										<td className='px-4 py-2 border border-gray-300'>
+											{index === 0 ? name : ''}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{order.orderNumber}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{new Date(order.orderDate).toLocaleDateString()}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{new Date(order.paymentDate).toLocaleDateString()}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{order.quantity}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{parseFloat(order.totalPrice).toFixed(2)}
+										</td>
+									</tr>
+								))}
+
+								{orders.length > 0 && (
+									<tr className='font-bold bg-primary-100'>
+										<td
+											className='px-4 py-2 border border-gray-300'
+											colSpan={4}
+										>
+											Всего за {name}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{totalProductQuantity}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{totalProductPrice.toFixed(2)}
+										</td>
+									</tr>
+								)}
+							</>
+						)
+					})}
+				</tbody>
+				<tfoot className='sticky bottom-0'>
+					<tr className='font-bold bg-primary-200'>
+						<td
+							className='px-4 py-2 border border-gray-300'
+							colSpan={4}
+						>
+							Итого
+						</td>
+						<td className='px-4 py-2 border border-gray-300 text-right'>
+							{totalAllQuantity}
+						</td>
+						<td className='px-4 py-2 border border-gray-300 text-right'>
+							{totalAllPrice.toFixed(2)}
+						</td>
+					</tr>
+				</tfoot>
+			</table>
 		</div>
 	)
 }

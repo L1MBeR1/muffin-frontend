@@ -1,5 +1,3 @@
-import { Toaster } from 'sonner'
-
 import { Footer } from '@/components/partials/footer'
 import { Header } from '@/components/partials/header'
 
@@ -11,7 +9,6 @@ export default function Base({
 	return (
 		<div className='main text-foreground bg-background'>
 			<Header />
-			<Toaster />
 			<main>{children}</main>
 			<Footer />
 		</div>

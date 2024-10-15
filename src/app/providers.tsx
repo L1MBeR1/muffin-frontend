@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { useRouter } from 'next/navigation'
 import { PropsWithChildren, useState } from 'react'
+import { Toaster } from 'sonner'
 
 export function Providers({ children }: PropsWithChildren) {
 	const [client] = useState(
@@ -25,6 +26,7 @@ export function Providers({ children }: PropsWithChildren) {
 				navigate={router.push}
 			>
 				{children}
+				<Toaster />
 				<ReactQueryDevtools initialIsOpen={false} />
 			</NextUIProvider>
 		</QueryClientProvider>
