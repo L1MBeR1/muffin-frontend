@@ -1,5 +1,6 @@
 'use client'
 
+import { Spinner } from '@nextui-org/react'
 import { useEffect } from 'react'
 import { Cell, Pie, PieChart, Tooltip } from 'recharts'
 
@@ -16,11 +17,11 @@ const GENDER_COLORS: Record<Gender, string> = {
 }
 
 const AGE_COLORS: Record<string, string> = {
-	'<18': '#b6d2ab',
-	'18-29': '#9ac08b',
-	'30-39': '#7eaf6b',
-	'40-49': '#659551',
-	'50<': '#4e743f',
+	'<18': '#CDE85F',
+	'18-29': '#AECB56',
+	'30-39': '#90AE4D',
+	'40-49': '#719044',
+	'50<': '#52733B',
 	unknown: '#E9D5CE'
 }
 
@@ -65,7 +66,14 @@ export default function Buyers({
 	}, [startDate, endDate, productId])
 
 	if (isLoading || isFetching) {
-		return <p>Загрузка данных...</p>
+		return (
+			<div className='w-full h-full flex items-center justify-center'>
+				<Spinner
+					color='secondary'
+					size='lg'
+				/>
+			</div>
+		)
 	}
 
 	if (error) {

@@ -1,5 +1,3 @@
-'use client'
-
 import { Spinner } from '@nextui-org/react'
 import { useEffect } from 'react'
 
@@ -26,8 +24,8 @@ const columns = [
 	{ key: 'orderNumber', label: 'Номер заказа' },
 	{ key: 'orderDate', label: 'Дата заказа' },
 	{ key: 'paymentDate', label: 'Дата оплаты' },
-	{ key: 'quantity', label: 'Количество' },
-	{ key: 'totalPrice', label: 'Стоимость' }
+	{ key: 'quantity', label: 'Количество (шт.)' },
+	{ key: 'totalPrice', label: 'Стоимость (руб.)' }
 ]
 
 export default function Orders({
@@ -45,7 +43,7 @@ export default function Orders({
 		refetch()
 	}, [startDate, endDate, productId])
 
-	if (isLoading || isFetching) {
+	if (isFetching) {
 		return (
 			<div className='w-full h-full flex items-center justify-center'>
 				<Spinner
@@ -59,6 +57,7 @@ export default function Orders({
 	if (error) {
 		return <div>Error: {error.message}</div>
 	}
+
 	if (
 		!data ||
 		data.length === 0 ||
@@ -72,18 +71,19 @@ export default function Orders({
 			</div>
 		)
 	}
+
 	let totalAllQuantity = 0
 	let totalAllPrice = 0
 
 	return (
 		<div className='overflow-auto h-full'>
-			<table className='min-w-full bg-white border border-gray-300'>
-				<thead className='sticky top-0 bg-gray-200 z-10'>
+			<table className='min-w-full bg-white border-2 border-gray-300'>
+				<thead className='sticky top-0 bg-primary-200 z-10'>
 					<tr>
 						{columns.map(column => (
 							<th
 								key={column.key}
-								className='px-4 py-2 border border-gray-300 text-left text-sm font-medium text-gray-700'
+								className='px-4 py-2 border border-gray-300 text-md font-bold text-gray-700 text-center'
 							>
 								{column.label}
 							</th>
@@ -91,72 +91,71 @@ export default function Orders({
 					</tr>
 				</thead>
 				<tbody>
-					{data &&
-						data.map((product: IProduct) => {
-							const { id, name, orders } = product
+					{data.map((product: IProduct) => {
+						const { id, name, orders } = product
 
-							const totalProductPrice = orders.reduce(
-								(acc, order) => acc + parseFloat(order.totalPrice),
-								0
-							)
-							const totalProductQuantity = orders.reduce(
-								(acc, order) => acc + order.quantity,
-								0
-							)
+						const totalProductPrice = orders.reduce(
+							(acc, order) => acc + parseFloat(order.totalPrice),
+							0
+						)
+						const totalProductQuantity = orders.reduce(
+							(acc, order) => acc + order.quantity,
+							0
+						)
 
-							totalAllQuantity += totalProductQuantity
-							totalAllPrice += totalProductPrice
+						totalAllQuantity += totalProductQuantity
+						totalAllPrice += totalProductPrice
 
-							return (
-								<>
-									{orders.map((order, index) => (
-										<tr
-											key={`${id}-${index}`}
-											className='even:bg-gray-100'
+						return (
+							<>
+								{orders.map((order, index) => (
+									<tr
+										key={`${id}-${index}`}
+										className='even:bg-primary-50 odd:bg-secondary-50'
+									>
+										<td className='px-4 py-2 border border-gray-300'>
+											{index === 0 ? name : ''}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{order.orderNumber}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{new Date(order.orderDate).toLocaleDateString()}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{new Date(order.paymentDate).toLocaleDateString()}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{order.quantity}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{parseFloat(order.totalPrice).toFixed(2)}
+										</td>
+									</tr>
+								))}
+
+								{orders.length > 0 && (
+									<tr className='font-bold bg-primary-100'>
+										<td
+											className='px-4 py-2 border border-gray-300'
+											colSpan={4}
 										>
-											<td className='px-4 py-2 border border-gray-300'>
-												{index === 0 ? name : ''}
-											</td>
-											<td className='px-4 py-2 border border-gray-300 '>
-												{order.orderNumber}
-											</td>
-											<td className='px-4 py-2 border border-gray-300'>
-												{new Date(order.orderDate).toLocaleDateString()}
-											</td>
-											<td className='px-4 py-2 border border-gray-300'>
-												{new Date(order.paymentDate).toLocaleDateString()}
-											</td>
-											<td className='px-4 py-2 border border-gray-300 text-right'>
-												{order.quantity}
-											</td>
-											<td className='px-4 py-2 border border-gray-300 text-right'>
-												{parseFloat(order.totalPrice).toFixed(2)}
-											</td>
-										</tr>
-									))}
-
-									{orders.length > 0 && (
-										<tr className='font-bold bg-gray-100'>
-											<td
-												className='px-4 py-2 border border-gray-300'
-												colSpan={4}
-											>
-												Всего за {name}
-											</td>
-											<td className='px-4 py-2 border border-gray-300 text-right'>
-												{totalProductQuantity}
-											</td>
-											<td className='px-4 py-2 border border-gray-300 text-right'>
-												{totalProductPrice.toFixed(2)}
-											</td>
-										</tr>
-									)}
-								</>
-							)
-						})}
+											Всего за {name}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{totalProductQuantity}
+										</td>
+										<td className='px-4 py-2 border border-gray-300 text-right'>
+											{totalProductPrice.toFixed(2)}
+										</td>
+									</tr>
+								)}
+							</>
+						)
+					})}
 				</tbody>
 				<tfoot className='sticky bottom-0'>
-					<tr className='font-bold bg-gray-300'>
+					<tr className='font-bold bg-primary-200'>
 						<td
 							className='px-4 py-2 border border-gray-300'
 							colSpan={4}
