@@ -93,7 +93,7 @@ export default function Sales() {
 		if (!isReportReady) {
 			return (
 				<div className='flex w-full h-full items-center justify-center text-xl'>
-					<p>Заполните даты и выберите продукт для просмотра отчетов.</p>
+					<p>Заполните даты для просмотра анализа</p>
 				</div>
 			)
 		}
