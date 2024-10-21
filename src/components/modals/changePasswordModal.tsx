@@ -104,6 +104,9 @@ const ChangePasswordModal = ({
 									}
 								}}
 							/>
+							<div className='pl-2 text-sm'>
+								<p>Пароль должен содержать минимум 6 символов</p>
+							</div>
 							<PasswordField
 								label='Повторите пароль'
 								placeholder='Введите ваш пароль'

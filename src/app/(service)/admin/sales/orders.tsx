@@ -19,15 +19,6 @@ interface IProduct {
 	orders: IOrder[]
 }
 
-const columns = [
-	{ key: 'name', label: 'Продукт' },
-	{ key: 'orderNumber', label: 'Номер заказа' },
-	{ key: 'orderDate', label: 'Дата заказа' },
-	{ key: 'paymentDate', label: 'Дата оплаты' },
-	{ key: 'quantity', label: 'Количество (шт.)' },
-	{ key: 'totalPrice', label: 'Стоимость (руб.)' }
-]
-
 export default function Orders({
 	startDate,
 	endDate,
@@ -76,18 +67,28 @@ export default function Orders({
 	let totalAllPrice = 0
 
 	return (
-		<div className='overflow-auto h-full'>
-			<table className='min-w-full bg-white border-2 border-gray-300'>
+		<div className='overflow-y-auto w-fit'>
+			<table className=' bg-white border-2 border-gray-300'>
 				<thead className='sticky top-0 bg-primary-200 z-10'>
 					<tr>
-						{columns.map(column => (
-							<th
-								key={column.key}
-								className='px-4 py-2 border border-gray-300 text-md font-bold text-gray-700 text-center'
-							>
-								{column.label}
-							</th>
-						))}
+						<th className='px-4 py-2 border border-gray-300 text-md font-bold text-gray-700 text-center'>
+							Продукт
+						</th>
+						<th className='px-4 py-2 border border-gray-300 text-md font-bold text-gray-700 text-center'>
+							Номер заказа
+						</th>
+						<th className='px-4 py-2 border border-gray-300 text-md font-bold text-gray-700 text-center'>
+							Дата заказа
+						</th>
+						<th className='px-4 py-2 border border-gray-300 text-md font-bold text-gray-700 text-center'>
+							Дата оплаты
+						</th>
+						<th className='px-4 py-2 border border-gray-300 text-md font-bold text-gray-700 text-center'>
+							Кол-во (шт.)
+						</th>
+						<th className='px-4 py-2 border border-gray-300 text-md font-bold text-gray-700 text-center'>
+							Сто-ть (руб.)
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -135,7 +136,7 @@ export default function Orders({
 								))}
 
 								{orders.length > 0 && (
-									<tr className='font-bold bg-primary-100'>
+									<tr className='font-bold bg-primary-100 text-lg'>
 										<td
 											className='px-4 py-2 border border-gray-300'
 											colSpan={4}
@@ -155,7 +156,7 @@ export default function Orders({
 					})}
 				</tbody>
 				<tfoot className='sticky bottom-0'>
-					<tr className='font-bold bg-primary-200'>
+					<tr className='font-bold bg-primary-200 text-lg'>
 						<td
 							className='px-4 py-2 border border-gray-300'
 							colSpan={4}
