@@ -72,8 +72,8 @@ export default function Bakeries({
 	if (error) return <div>Ошибка загрузки данных</div>
 
 	return (
-		<div className='flex flex-row grow w-full justify-around space-x-4'>
-			<div className='flex grow h-full max-w-screen-sm'>
+		<div className='flex flex-row grow w-full justify-around space-x-8'>
+			<div className='flex h-full max-w-screen-sm'>
 				{bakeries && <BakeriesTable bakeries={bakeries} />}
 			</div>
 			<div className='flex grow h-full'>
