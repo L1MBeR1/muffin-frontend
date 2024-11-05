@@ -45,7 +45,7 @@ const ChangeEmailModal = ({ isOpen, onOpenChange }: ChangeEmailModalProps) => {
 			onOpenChange(false)
 		},
 		onError(error: any) {
-			setAuthError('Ошибка при смене почты. Проверьте данные.')
+			setAuthError('Ошибка при изменении почты. Проверьте данные.')
 		},
 		onSettled() {
 			setLoading(false)
@@ -67,7 +67,7 @@ const ChangeEmailModal = ({ isOpen, onOpenChange }: ChangeEmailModalProps) => {
 						onSubmit={handleSubmit(onSubmit)}
 						className='flex flex-col gap-3'
 					>
-						<ModalHeader>Смена почты</ModalHeader>
+						<ModalHeader>Изменение почты</ModalHeader>
 						<ModalBody>
 							{authError && (
 								<div className='text-red-500 text-sm'>{authError}</div>

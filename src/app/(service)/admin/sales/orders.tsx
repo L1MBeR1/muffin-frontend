@@ -141,7 +141,7 @@ export default function Orders({
 											className='px-4 py-2 border border-gray-300'
 											colSpan={4}
 										>
-											Всего за {name}
+											Итого за {name}
 										</td>
 										<td className='px-4 py-2 border border-gray-300 text-right'>
 											{totalProductQuantity}
@@ -161,7 +161,7 @@ export default function Orders({
 							className='px-4 py-2 border border-gray-300'
 							colSpan={4}
 						>
-							Итого
+							Всего
 						</td>
 						<td className='px-4 py-2 border border-gray-300 text-right'>
 							{totalAllQuantity}

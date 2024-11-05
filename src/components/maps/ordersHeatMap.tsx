@@ -49,7 +49,7 @@ const HeatmapLayer = ({ points }: { points: [number, number, number][] }) => {
 	const map = useMap()
 
 	useEffect(() => {
-		const heatLayer = (window as any).L.heatLayer(points, { radius: 60 }).addTo(
+		const heatLayer = (window as any).L.heatLayer(points, { radius: 56 }).addTo(
 			map
 		)
 
@@ -75,8 +75,8 @@ const OrdersHeatMap = ({
 
 	return (
 		<MapContainer
-			center={[55.751244, 37.618423]}
-			zoom={13}
+			center={[52.28, 104.294]}
+			zoom={12}
 			style={{ height: '100%', width: '100%' }}
 		>
 			<TileLayer
