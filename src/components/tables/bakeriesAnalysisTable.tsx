@@ -45,7 +45,7 @@ const BakeriesTable: React.FC<BakeriesTableProps> = ({ bakeries }) => {
 					})}
 					<tr className='bg-primary-200 font-bold'>
 						<td className='px-4 py-2 border border-gray-300 text-left'>
-							Итого
+							Всего
 						</td>
 						<td className='px-4 py-2 border border-gray-300 text-right'>
 							{totalAllQuantity}

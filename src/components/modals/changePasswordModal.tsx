@@ -47,7 +47,7 @@ const ChangePasswordModal = ({
 			onOpenChange(false)
 		},
 		onError(error: any) {
-			setAuthError('Ошибка при смене пароля. Проверьте данные.')
+			setAuthError('Ошибка при изменении пароля. Проверьте данные.')
 		},
 		onSettled() {
 			setLoading(false)
@@ -69,7 +69,7 @@ const ChangePasswordModal = ({
 						onSubmit={handleSubmit(onSubmit)}
 						className='flex flex-col gap-3'
 					>
-						<ModalHeader>Смена пароля</ModalHeader>
+						<ModalHeader>Изменение пароля</ModalHeader>
 						<ModalBody>
 							{authError && (
 								<div className='text-red-500 text-sm'>{authError}</div>
